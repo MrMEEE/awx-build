@@ -1,0 +1,13 @@
+[Unit]
+Description=AWX Task Service
+Wants=network.target
+After=network.target
+
+[Service]
+Type=simple
+User=awx
+Group=awx
+ExecStart=/bin/bash -c 'source /etc/tower/env.sh && /usr/bin/launch_awx_task.sh'
+
+[Install]
+WantedBy=multi-user.target
