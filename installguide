@@ -40,3 +40,5 @@ systemctl start awx-web
 systemctl enable awx-task
 systemctl start awx-task
 
+Webinterface will be available at http://<awx-server>:8052
+
