@@ -34,17 +34,6 @@ wget -O /etc/yum.repos.d/awx.repo https://copr.fedorainfracloud.org/coprs/mrmeee
 
 yum -y install awx
 
-Seems like I have forgotten to include the service files in the rpm..
-
-https://github.com/MrMEEE/awx-build/blob/master/rpm/awx-task.service
-
-https://github.com/MrMEEE/awx-build/blob/master/rpm/awx-web.service
-
-Put these two files in /etc/systemd/system/
-
-This will be fixed soon
-
-
 systemctl enable awx-web
 systemctl start awx-web
 systemctl enable awx-task
