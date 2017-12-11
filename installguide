@@ -1,24 +1,42 @@
-Install AWX Community edition
-
-yum install -y epel-release
-yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
-yum install -y rabbitmq-server postgresql96-server wget
-wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
-yum install -y awx
+yum install epel-release
+yum -y localinstall http://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
+yum -y install postgresql96-server.x86_64
 /usr/pgsql-9.6/bin/postgresql96-setup initdb
-systemctl enable rabbitmq-server
+systemctl start postgresql-9.6.service
+systemctl enable postgresql-9.6.service
+
+yum -y install rabbitmq-server memcached
 systemctl start rabbitmq-server
-systemctl enable postgresql-9.6
-systemctl start postgresql-9.6
+systemctl enable rabbitmq-server
+systemctl start memcached
+systemctl enable memcached
 
-sudo -u postgres createuser -S awx (ignore "could not change directory to "/root"")
-sudo -u postgres createdb -O awx awx (ignore "could not change directory to "/root"")
+-----
+su - postgres
+psql
+create database awx;
+----
 
-sudo -u awx /opt/awx/bin/awx-manage migrate
+/var/lib/pgsql/9.6/data/pg_hba.conf:
 
-echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | sudo -u awx /opt/awx/bin/awx-manage shell
-sudo -u awx /opt/awx/bin/awx-manage create_preload_data
-sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
-sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
+--
+local   all             all                                     trust
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            trust
+host    all             all             localhost            trust
+# IPv6 local connections:
+host    all             all             ::1/128                 ident
+--
 
+yum -y install wget
 
+wget -O /etc/yum.repos.d/awx.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
+
+yum -y install awx
+
+systemctl enable awx-web
+systemctl start awx-web
+systemctl enable awx-task
+systemctl start awx-task
+
+Webinterface will be available at http://<awx-server>:8052
