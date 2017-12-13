@@ -9,7 +9,13 @@ Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 yum install -y epel-release
 yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
 yum install -y rabbitmq-server postgresql96-server wget memcached
+
+For all builds (git and releases):
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
+
+For only releases (1.0.1, 1.0.2 ... )
+wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
+
 yum install -y awx
 /usr/pgsql-9.6/bin/postgresql96-setup initdb
 systemctl enable rabbitmq-server
