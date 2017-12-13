@@ -20,3 +20,19 @@ echo "from django.contrib.auth.models import User; User.objects.create_superuser
 sudo -u awx /opt/awx/bin/awx-manage create_preload_data
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
+
+wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/MrMEEE/awx-build/master/nginx.conf
+
+systemctl start awx-cbreceiver
+systemctl start awx-celery-beat
+systemctl start awx-celery-worker
+systemctl start awx-channels-worker
+systemctl start awx-daphne
+systemctl start awx-web
+
+systemctl enable awx-cbreceiver
+systemctl enable awx-celery-beat
+systemctl enable awx-celery-worker
+systemctl enable awx-channels-worker
+systemctl enable awx-daphne
+systemctl enable awx-web
