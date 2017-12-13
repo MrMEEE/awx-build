@@ -34,6 +34,9 @@ wget -O /etc/yum.repos.d/awx.repo https://copr.fedorainfracloud.org/coprs/mrmeee
 
 yum -y install awx
 
+set your machines hostname in /etc/tower/settings.py:
+CLUSTER_HOST_ID = "<hostname>"
+
 systemctl enable awx-web
 systemctl start awx-web
 systemctl enable awx-task
