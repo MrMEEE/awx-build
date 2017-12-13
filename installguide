@@ -1,5 +1,9 @@
 Install AWX Community edition
 
+SELinux policies has still not been made (comming soon), so you'll have to make your own or disable SELinux...
+
+Firewall rules has still not been made, so you'll have to make your own or disable the firewall...
+
 yum install -y epel-release
 yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
 yum install -y rabbitmq-server postgresql96-server wget memcached
