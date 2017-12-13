@@ -29,7 +29,10 @@ sudo -u awx /opt/awx/bin/awx-manage create_preload_data
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
 
+yum -y install nginx
 wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/MrMEEE/awx-build/master/nginx.conf
+systemctl enable nginx
+systemctl start nginx
 
 systemctl start awx-cbreceiver
 systemctl start awx-celery-beat
