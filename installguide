@@ -25,8 +25,8 @@ systemctl start postgresql-9.6
 systemctl enable memcached
 systemctl start memcached
 
-sudo -u postgres createuser -S awx (ignore "could not change directory to "/root"")
-sudo -u postgres createdb -O awx awx (ignore "could not change directory to "/root"")
+sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
+sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
 
 sudo -u awx /opt/awx/bin/awx-manage migrate
 
