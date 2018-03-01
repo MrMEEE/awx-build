@@ -1,13 +1,16 @@
 Install AWX Community edition
 
-SELinux policies has still not been made (comming soon), so you'll have to make your own or disable SELinux...
+SELinux policies has still not been created (comming soon), so you'll have to make your own or disable SELinux...
 
-Firewall rules has still not been made, so you'll have to make your own or disable the firewall...
+Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
 
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 
+Activate EPEL:
 yum install -y epel-release
+Activate PostgreSQL 9.6:
 yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
+Install RabbitMQ, PostgreSQL and memcached
 yum install -y rabbitmq-server postgresql96-server wget memcached
 
 For all builds (git and releases):
@@ -16,8 +19,13 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
 For only releases (1.0.1, 1.0.2 ... )
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
 
+Install AWX:
 yum install -y awx
+
+Initialize DB:
 /usr/pgsql-9.6/bin/postgresql96-setup initdb
+
+Start services:
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
 systemctl enable postgresql-9.6
@@ -25,21 +33,26 @@ systemctl start postgresql-9.6
 systemctl enable memcached
 systemctl start memcached
 
+Create Postgres user and DB:
 sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
 sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
 
+Import Database data:
 sudo -u awx /opt/awx/bin/awx-manage migrate
 
+Initial configuration of AWX
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | sudo -u awx /opt/awx/bin/awx-manage shell
 sudo -u awx /opt/awx/bin/awx-manage create_preload_data
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
 
+Install NGINX as proxy:
 yum -y install nginx
 wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/MrMEEE/awx-build/master/nginx.conf
 systemctl enable nginx
 systemctl start nginx
 
+Start Services:
 systemctl start awx-cbreceiver
 systemctl start awx-celery-beat
 systemctl start awx-celery-worker
