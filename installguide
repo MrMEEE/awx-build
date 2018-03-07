@@ -66,3 +66,9 @@ systemctl enable awx-celery-worker
 systemctl enable awx-channels-worker
 systemctl enable awx-daphne
 systemctl enable awx-web
+
+# Upgrading to newest version (not guarenteed to work)
+yum update
+sudo -u awx /opt/awx/bin/awx-manage makemigrations
+sudo -u awx /opt/awx/bin/awx-manage migrate
+
