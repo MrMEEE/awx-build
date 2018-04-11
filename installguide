@@ -9,9 +9,16 @@ Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 Activate EPEL:
 yum install -y epel-release
 Activate PostgreSQL 9.6:
+CentOS:
 yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
+RHEL:
+Activate Software Collections
 Install RabbitMQ, PostgreSQL and memcached
+CentOS:
 yum install -y rabbitmq-server postgresql96-server wget memcached
+RHEL:
+yum install -y rh-postgresql96 rabbitmq-server wget memcached
+
 
 For all builds (git and releases):
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
@@ -24,19 +31,33 @@ Install AWX:
 yum install -y awx
 
 Initialize DB:
+CentOS:
 /usr/pgsql-9.6/bin/postgresql96-setup initdb
+RHEL:
+scl enable rh-postgresql96 "postgresql-setup initdb"
 
 Start services:
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
+
+CentOS:
 systemctl enable postgresql-9.6
 systemctl start postgresql-9.6
+RHEL:
+systemctl start rh-postgresql96-postgresql.service
+systemctl enable rh-postgresql96-postgresql.service
+
 systemctl enable memcached
 systemctl start memcached
 
 Create Postgres user and DB:
+CentOS:
 sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
 sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
+
+RHEL:
+scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
+scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
 
 Import Database data:
 sudo -u awx /opt/awx/bin/awx-manage migrate
