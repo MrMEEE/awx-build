@@ -89,6 +89,17 @@ systemctl enable awx-channels-worker
 systemctl enable awx-daphne
 systemctl enable awx-web
 
+
+Just got an answer from the AWX Team:
+
+"Upgrades between AWX versions are not expected to work. However, we have recently added an import/export capability to tower-cli/awx-cli, which allows you to export your job templates and other objects (not including credential secrets) to a JSON file, which you can then re-import to a freshly installed 1.0.6."
+
+They are referring to the awx-cli tool from their separate repo.. also, the awx-manage tool have a dumpdata/loaddata tool...
+
+I'm going to see if I can do a workaround for upgrades..
+
+Right now.. DON'T Upgrade..
+
 # Upgrading to newest version (not guarenteed to work)
 yum update
 sudo -u awx /opt/awx/bin/awx-manage makemigrations
