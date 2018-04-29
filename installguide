@@ -102,9 +102,7 @@ Right now.. DON'T Upgrade..
 
 For the guys that really want to push their luck :)... Something like this will probably work (You have to install awx-cli in advance):
 
-awx-cli receive --credential all > credentials
-awx-cli receive --all > data
-awx-cli receive --project all > project
+awx-cli receive --organization all --team all --credential_type all --credential all --notification_template all --user all --inventory_script all --inventory all --project all --job_template all --workflow all > alldata
 
 systemctl stop awx-celery-worker awx-cbreceiver awx-celery-beat awx-channels-worker awx-daphne awx-web
 su - postgres -c "dropdb awx"
@@ -115,9 +113,8 @@ sudo -u awx /opt/awx/bin/awx-manage migrate
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'test')" | sudo -u awx /opt/awx/bin/awx-manage shell
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
-awx-cli send credentials
-awx-cli send project
-awx-cli send data
+
+awx-cli send alldata
 
 
 
