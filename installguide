@@ -23,7 +23,7 @@ yum install -y rh-postgresql96 rabbitmq-server wget memcached
 For all builds (git and releases):
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
 
-# DON'T use this repo currently, use the one above... .. as AWX upstream doesn't release stable releases, I don't update the repo (available in the repo: yum install ansible-tower-cli)...
+# DON'T use this repo currently, use the one above... .. as AWX upstream doesn't release stable releases, I don't update the repo...
 # For only releases (1.0.1, 1.0.2 ... )
 # wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
 
@@ -100,7 +100,7 @@ I'm going to see if I can do a workaround for upgrades..
 
 Right now.. DON'T Upgrade..
 
-For the guys that really want to push their luck :)... Something like this will probably work (You have to install awx-cli in advance):
+For the guys that really want to push their luck :)... Something like this will probably work (You have to install awx-cli in advance, available in the repo: "yum install ansible-tower-cli"):
 
 awx-cli receive --organization all --team all --credential_type all --credential all --notification_template all --user all --inventory_script all --inventory all --project all --job_template all --workflow all > alldata
 
