@@ -1,8 +1,10 @@
 Install AWX Community edition
 
+TODO List:
 SELinux policies has still not been created (comming soon), so you'll have to make your own or disable SELinux...
-
 Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
+Backup/Restore scripts
+Fix Migrations/upgrades so that they will work everytime.. see bottom for more description..
 
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 
