@@ -89,8 +89,23 @@ systemctl enable awx-channels-worker
 systemctl enable awx-daphne
 systemctl enable awx-web
 
+Confirmed working upgrade paths:
+1.0.5.0 -> 1.0.5.31 (have tried almost every minor between)
+1.0.5.32 -> 1.0.6.0
+1.0.6.0 -> 1.0.6.1
+1.0.6.1 -> 1.0.6.3
+Here you can use:
+# Upgrading to newest version (not guarenteed to work)
+yum update
+sudo -u awx /opt/awx/bin/awx-manage makemigrations
+sudo -u awx /opt/awx/bin/awx-manage migrate
 
-Just got an answer from the AWX Team:
+
+Confirmed Breaking Upgrade paths:
+1.0.5.31 -> 1.0.5.32
+
+Here you need to get creative..
+Got an answer from the AWX Team:
 
 "Upgrades between AWX versions are not expected to work. However, we have recently added an import/export capability to tower-cli/awx-cli, which allows you to export your job templates and other objects (not including credential secrets) to a JSON file, which you can then re-import to a freshly installed 1.0.6."
 
@@ -98,9 +113,18 @@ They are referring to the awx-cli tool from their separate repo.. also, the awx-
 
 I'm going to see if I can do a workaround for upgrades..
 
-Right now.. DON'T Upgrade..
+
 
 For the guys that really want to push their luck :)... Something like this will probably work (You have to install awx-cli in advance, available in the repo: "yum install ansible-tower-cli"):
+
+As far as I can see.. this is missing when using the awx-cli export/import:
+
+Users (export is blank), and therefore user permissions isn't set
+Log/History is not exported (not high priority in the short run)
+Inventory Groups (custom created groups fails for me, going from 1.0.5.31->1.0.6.1
+Credential passwords (there should be an option to include them)
+LDAP/Auth config (is just not included)
+
 
 awx-cli receive --organization all --team all --credential_type all --credential all --notification_template all --user all --inventory_script all --inventory all --project all --job_template all --workflow all > alldata
 
@@ -115,13 +139,4 @@ sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
 
 awx-cli send alldata
-
-
-
-OLD UPGRADE INSTRUCTIONS (works sometimes)...
-
-# Upgrading to newest version (not guarenteed to work)
-yum update
-sudo -u awx /opt/awx/bin/awx-manage makemigrations
-sudo -u awx /opt/awx/bin/awx-manage migrate
 
