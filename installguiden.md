@@ -1,111 +1,178 @@
-Install AWX Community edition
+# Install AWX Community Edition (RPM)
 
-TODO List:
-SELinux policies has still not been created (comming soon), so you'll have to make your own or disable SELinux...
-Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
-Backup/Restore scripts
-Fix Migrations/upgrades so that they will work everytime.. see bottom for more description..
+**Caveats/TODO List**
+* SELinux policies has still not been created (comming soon), so you'll have to make your own or disable SELinux...
+* Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
+* Backup/Restore scripts
+* Fix Migrations/upgrades so that they will work everytime.. see bottom for more description..
 
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 
-Activate EPEL:
+## Installation Steps
+
+### Repos
+
+* Activate EPEL
+```bash
 yum install -y epel-release
-Activate PostgreSQL 9.6:
-CentOS:
+```
+
+* Activate PostgreSQL 9.6
+ * CentOS
+```bash
 yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
-RHEL:
-Activate Software Collections
-Install RabbitMQ, PostgreSQL and memcached
-CentOS:
-yum install -y rabbitmq-server postgresql96-server wget memcached
-RHEL:
-yum install -y rh-postgresql96 rabbitmq-server wget memcached
+```
+ * RHEL
+  * Activate Software Collections
 
-
-For all builds (git and releases):
+* AWX Repo
+```bash
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
+```
+* **NOTE:**
+DON'T use the AWX Non-Dev repo, use the one above.
+AWX upstream doesn't release stable releases, so the following repo is not updated.
+For only releases (1.0.1, 1.0.2 ... ): https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
 
-# DON'T use this repo currently, use the one above... .. as AWX upstream doesn't release stable releases, I don't update the repo...
-# For only releases (1.0.1, 1.0.2 ... )
-# wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
+### Install Pre-Reqs for AWX
 
-Install AWX:
+* Install RabbitMQ, PostgreSQL and memcached
+ * CentOS
+```bash
+yum install -y rabbitmq-server postgresql96-server wget memcached
+```
+
+ * RHEL
+```bash
+yum install -y rh-postgresql96 rabbitmq-server wget memcached
+```
+
+* Install AWX:
+```bash
 yum install -y awx
+```
 
-Initialize DB:
-CentOS:
+### Configure Pre-Req Applications
+
+* Initialize DB
+ * CentOS
+```bash
 /usr/pgsql-9.6/bin/postgresql96-setup initdb
-RHEL:
+```
+ * RHEL
+```bash
 scl enable rh-postgresql96 "postgresql-setup initdb"
+```
 
-Start services:
+* Start services: RabbitMQ
+```bash
 systemctl enable rabbitmq-server
 systemctl start rabbitmq-server
+```
 
-CentOS:
+* Start services: Postgresql Database
+ * CentOS
+```bash
 systemctl enable postgresql-9.6
 systemctl start postgresql-9.6
-RHEL:
+```
+ * RHEL
+```bash
 systemctl start rh-postgresql96-postgresql.service
 systemctl enable rh-postgresql96-postgresql.service
+```
 
+* Start services: Memcached
+```bash
 systemctl enable memcached
 systemctl start memcached
+```
 
-Create Postgres user and DB:
-CentOS:
+* Create Postgres user and DB:
+ * CentOS
+```bash
 sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
 sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
+```
 
-RHEL:
+ * RHEL
+```bash
 scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
 scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
+```
 
-Import Database data:
+### Configure AWX
+
+* Import Database data:
+```bash
 sudo -u awx /opt/awx/bin/awx-manage migrate
+```
 
-Initial configuration of AWX
+* Initial configuration of AWX
+```bash
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | sudo -u awx /opt/awx/bin/awx-manage shell
 sudo -u awx /opt/awx/bin/awx-manage create_preload_data
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
+```
 
-Install NGINX as proxy:
+### Install and Configure Web Server Proxy
+
+* Install NGINX as proxy:
+```bash
 yum -y install nginx
 wget -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/MrMEEE/awx-build/master/nginx.conf
 systemctl enable nginx
 systemctl start nginx
+```
 
-Start Services:
+### Start and Enable AWX
+
+* Start Services
+```bash
 systemctl start awx-cbreceiver
 systemctl start awx-celery-beat
 systemctl start awx-celery-worker
 systemctl start awx-channels-worker
 systemctl start awx-daphne
 systemctl start awx-web
+```
 
+* Enable Services
+```bash
 systemctl enable awx-cbreceiver
 systemctl enable awx-celery-beat
 systemctl enable awx-celery-worker
 systemctl enable awx-channels-worker
 systemctl enable awx-daphne
 systemctl enable awx-web
+```
+
+---
+
+# Upgrade AWX Community Edition (RPM)
+
+## Working Upgrade Paths
 
 Confirmed working upgrade paths:
-1.0.5.0 -> 1.0.5.31 (have tried almost every minor between)
-1.0.5.32 -> 1.0.6.0
-1.0.6.0 -> 1.0.6.1
-1.0.6.1 -> 1.0.6.3
-1.0.6.3 -> 1.0.6.7
+* 1.0.5.0 -> 1.0.5.31 (have tried almost every minor between)
+* 1.0.5.32 -> 1.0.6.0
+* 1.0.6.0 -> 1.0.6.1
+* 1.0.6.1 -> 1.0.6.3
+* 1.0.6.3 -> 1.0.6.7
+
 Here you can use:
 # Upgrading to newest version (not guarenteed to work)
+```bash
 yum update
 sudo -u awx /opt/awx/bin/awx-manage makemigrations
 sudo -u awx /opt/awx/bin/awx-manage migrate
+```
 
+## Broken Upgrade Paths
 
 Confirmed Breaking Upgrade paths:
-1.0.5.31 -> 1.0.5.32
+* 1.0.5.31 -> 1.0.5.32
 
 Here you need to get creative..
 Got an answer from the AWX Team:
@@ -128,18 +195,27 @@ Inventory Groups (custom created groups fails for me, going from 1.0.5.31->1.0.6
 Credential passwords (there should be an option to include them)
 LDAP/Auth config (is just not included)
 
-
+```bash
 awx-cli receive --organization all --team all --credential_type all --credential all --notification_template all --user all --inventory_script all --inventory all --project all --job_template all --workflow all > alldata
+```
 
+```bash
 systemctl stop awx-celery-worker awx-cbreceiver awx-celery-beat awx-channels-worker awx-daphne awx-web
 su - postgres -c "dropdb awx"
 su - postgres -c "createdb -O awx awx"
+```
 
+```bash
 sudo -u awx /opt/awx/bin/awx-manage migrate
+```
 
+```bash
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'test')" | sudo -u awx /opt/awx/bin/awx-manage shell
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
+```
 
+```bash
 awx-cli send alldata
+```
 
