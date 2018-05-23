@@ -27,24 +27,25 @@ yum install -y epel-release
 
 * AWX Repo
 ```bash
+yum install -y wget
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
 ```
-* **NOTE:**
-DON'T use the AWX Non-Dev repo, use the one above.
-AWX upstream doesn't release stable releases, so the following repo is not updated.
-For only releases (1.0.1, 1.0.2 ... ): https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
+  * **NOTE:**
+  DON'T use the AWX Non-Dev repo, use the one above.
+  AWX upstream doesn't release stable releases, so the following repo is not updated.
+  For only releases (1.0.1, 1.0.2 ... ): https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
 
 ### Install Pre-Reqs for AWX
 
 * Install RabbitMQ, PostgreSQL and memcached
   * CentOS
   ```bash
-  yum install -y rabbitmq-server postgresql96-server wget memcached
+  yum install -y rabbitmq-server postgresql96-server memcached
   ```
 
   * RHEL
   ```bash
-  yum install -y rh-postgresql96 rabbitmq-server wget memcached
+  yum install -y rh-postgresql96 rabbitmq-server memcached
   ```
 
 * Install AWX:
@@ -161,8 +162,7 @@ Confirmed working upgrade paths:
 * 1.0.6.1 -> 1.0.6.3
 * 1.0.6.3 -> 1.0.6.7
 
-Here you can use:
-# Upgrading to newest version (not guarenteed to work)
+Upgrading to newest version (not guaranteed to work)
 ```bash
 yum update
 sudo -u awx /opt/awx/bin/awx-manage makemigrations
@@ -181,9 +181,10 @@ Got an answer from the AWX Team:
 
 They are referring to the awx-cli tool from their separate repo.. also, the awx-manage tool have a dumpdata/loaddata tool...
 
-I'm going to see if I can do a workaround for upgrades..
+I'm going to see if I can do a workaround for upgrades.
 
 
+### Upgrade Method Using Export/Import Utility
 
 For the guys that really want to push their luck :)... Something like this will probably work.
 
