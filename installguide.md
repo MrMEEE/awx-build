@@ -18,12 +18,12 @@ yum install -y epel-release
 ```
 
 * Activate PostgreSQL 9.6
- * CentOS
-```bash
-yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
-```
- * RHEL
-  * Activate Software Collections
+  * CentOS
+  ```bash
+  yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
+  ```
+  * RHEL
+    * Activate Software Collections
 
 * AWX Repo
 ```bash
@@ -37,15 +37,15 @@ For only releases (1.0.1, 1.0.2 ... ): https://copr.fedorainfracloud.org/coprs/m
 ### Install Pre-Reqs for AWX
 
 * Install RabbitMQ, PostgreSQL and memcached
- * CentOS
-```bash
-yum install -y rabbitmq-server postgresql96-server wget memcached
-```
+  * CentOS
+  ```bash
+  yum install -y rabbitmq-server postgresql96-server wget memcached
+  ```
 
- * RHEL
-```bash
-yum install -y rh-postgresql96 rabbitmq-server wget memcached
-```
+  * RHEL
+  ```bash
+  yum install -y rh-postgresql96 rabbitmq-server wget memcached
+  ```
 
 * Install AWX:
 ```bash
@@ -55,14 +55,14 @@ yum install -y awx
 ### Configure Pre-Req Applications
 
 * Initialize DB
- * CentOS
-```bash
-/usr/pgsql-9.6/bin/postgresql96-setup initdb
-```
- * RHEL
-```bash
-scl enable rh-postgresql96 "postgresql-setup initdb"
-```
+  * CentOS
+  ```bash
+  /usr/pgsql-9.6/bin/postgresql96-setup initdb
+  ```
+  * RHEL
+  ```bash
+  scl enable rh-postgresql96 "postgresql-setup initdb"
+  ```
 
 * Start services: RabbitMQ
 ```bash
@@ -71,16 +71,16 @@ systemctl start rabbitmq-server
 ```
 
 * Start services: Postgresql Database
- * CentOS
-```bash
-systemctl enable postgresql-9.6
-systemctl start postgresql-9.6
-```
- * RHEL
-```bash
-systemctl start rh-postgresql96-postgresql.service
-systemctl enable rh-postgresql96-postgresql.service
-```
+  * CentOS
+  ```bash
+  systemctl enable postgresql-9.6
+  systemctl start postgresql-9.6
+  ```
+  * RHEL
+  ```bash
+  systemctl start rh-postgresql96-postgresql.service
+  systemctl enable rh-postgresql96-postgresql.service
+  ```
 
 * Start services: Memcached
 ```bash
@@ -89,17 +89,17 @@ systemctl start memcached
 ```
 
 * Create Postgres user and DB:
- * CentOS
-```bash
-sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
-sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
-```
+  * CentOS
+  ```bash
+  sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
+  sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
+  ```
 
- * RHEL
-```bash
-scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
-scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
-```
+  * RHEL
+  ```bash
+  scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
+  scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
+  ```
 
 ### Configure AWX
 
@@ -174,10 +174,10 @@ sudo -u awx /opt/awx/bin/awx-manage migrate
 Confirmed Breaking Upgrade paths:
 * 1.0.5.31 -> 1.0.5.32
 
-Here you need to get creative..
-Got an answer from the AWX Team:
+Here you need to get creative.
 
-"Upgrades between AWX versions are not expected to work. However, we have recently added an import/export capability to tower-cli/awx-cli, which allows you to export your job templates and other objects (not including credential secrets) to a JSON file, which you can then re-import to a freshly installed 1.0.6."
+Got an answer from the AWX Team:
+> "Upgrades between AWX versions are not expected to work. However, we have recently added an import/export capability to tower-cli/awx-cli, which allows you to export your job templates and other objects (not including credential secrets) to a JSON file, which you can then re-import to a freshly installed 1.0.6."
 
 They are referring to the awx-cli tool from their separate repo.. also, the awx-manage tool have a dumpdata/loaddata tool...
 
@@ -185,36 +185,45 @@ I'm going to see if I can do a workaround for upgrades..
 
 
 
-For the guys that really want to push their luck :)... Something like this will probably work (You have to install awx-cli in advance, available in the repo: "yum install ansible-tower-cli"):
+For the guys that really want to push their luck :)... Something like this will probably work.
+
+You have to install awx-cli in advance, available in the repo:
+```bash
+yum install ansible-tower-cli
+```
 
 As far as I can see.. this is missing when using the awx-cli export/import:
+* Users (export is blank), and therefore user permissions isn't set
+* Log/History is not exported (not high priority in the short run)
+* Inventory Groups (custom created groups fails for me, going from 1.0.5.31->1.0.6.1
+* Credential passwords (there should be an option to include them)
+* LDAP/Auth config (is just not included)
 
-Users (export is blank), and therefore user permissions isn't set
-Log/History is not exported (not high priority in the short run)
-Inventory Groups (custom created groups fails for me, going from 1.0.5.31->1.0.6.1
-Credential passwords (there should be an option to include them)
-LDAP/Auth config (is just not included)
-
+Create a backup of AWX data
 ```bash
 awx-cli receive --organization all --team all --credential_type all --credential all --notification_template all --user all --inventory_script all --inventory all --project all --job_template all --workflow all > alldata
 ```
 
+Stop all services, re-create the database
 ```bash
 systemctl stop awx-celery-worker awx-cbreceiver awx-celery-beat awx-channels-worker awx-daphne awx-web
 su - postgres -c "dropdb awx"
 su - postgres -c "createdb -O awx awx"
 ```
 
+Migrate AWX data into the new database
 ```bash
 sudo -u awx /opt/awx/bin/awx-manage migrate
 ```
 
+Re-create the admin user, provision the instance and queues
 ```bash
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'test')" | sudo -u awx /opt/awx/bin/awx-manage shell
 sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
 sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
 ```
 
+Restore AWX data from the file (alldata)
 ```bash
 awx-cli send alldata
 ```
