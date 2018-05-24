@@ -32,3 +32,14 @@ comment out these two lines in /etc/awx/settings.py: (will be fixed from version
 CELERY_ROUTES['awx.main.tasks.cluster_node_heartbeat'] = {'queue': CLUSTER_HOST_ID, 'routing_key': CLUSTER_HOST_ID}
 CELERY_ROUTES['awx.main.tasks.purge_old_stdout_files'] = {'queue': CLUSTER_HOST_ID, 'routing_key': CLUSTER_HOST_ID}
 ```
+
+and change a line in this file: (will be fixed from version 1.0.6.9)
+/usr/lib/systemd/system/awx-celery-worker.service
+```
+ExecStart=/opt/awx/bin/celery worker -A awx -l info --autoscale=4 -Ofair -Q tower_scheduler,tower_broadcast_all,tower,%H -n celery@%H
+
+to
+
+ExecStart=/opt/awx/bin/celery worker -A awx -B -l info --autoscale=50,4 -Ofair -s /var/lib/awx/beat.db -n celery@%(ENV_HOSTNAME)s
+
+```
