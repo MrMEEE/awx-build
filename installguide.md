@@ -37,15 +37,28 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
 
 ### Install Pre-Reqs for AWX
 
-* Install RabbitMQ, PostgreSQL and memcached
+* Install RabbitMQ
+  ```
+  echo "[rabbitmq-erlang]
+  name=rabbitmq-erlang
+  baseurl=https://dl.bintray.com/rabbitmq/rpm/erlang/20/el/7
+  gpgcheck=1
+  gpgkey=https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
+  repo_gpgcheck=0
+  enabled=1" > /etc/yum.repo.d/rabbitmq-erlang.repo
+  
+  yum -y install https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.5/rabbitmq-server-3.7.5-1.el7.noarch.rpm
+  ```
+
+* Install PostgreSQL and memcached
   * CentOS
   ```bash
-  yum install -y rabbitmq-server postgresql96-server memcached
+  yum install -y postgresql96-server memcached
   ```
 
   * RHEL
   ```bash
-  yum install -y rh-postgresql96 rabbitmq-server memcached
+  yum install -y rh-postgresql96 memcached
   ```
 
 * Install AWX:
