@@ -45,7 +45,7 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
   gpgcheck=1
   gpgkey=https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
   repo_gpgcheck=0
-  enabled=1" > /etc/yum.repo.d/rabbitmq-erlang.repo
+  enabled=1" > /etc/yum.repos.d/rabbitmq-erlang.repo
   
   yum -y install https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.5/rabbitmq-server-3.7.5-1.el7.noarch.rpm
   ```
