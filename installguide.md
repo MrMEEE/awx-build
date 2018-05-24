@@ -161,6 +161,7 @@ Confirmed working upgrade paths:
 * 1.0.6.0 -> 1.0.6.1
 * 1.0.6.1 -> 1.0.6.3
 * 1.0.6.3 -> 1.0.6.7
+* 1.0.6.7 -> 1.0.6.8 [[Small workarounds]]
 
 Upgrading to newest version (not guaranteed to work)
 ```bash
