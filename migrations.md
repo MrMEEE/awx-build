@@ -21,6 +21,10 @@ rm -rf /var/lib/rabbitmq/mnesia/
 
 systemctl start rabbitmq-server
 
+rabbitmqctl stop_app
+rabbitmqctl reset
+rabbitmqctl start_app
+
 systemctl restart awx-celery-worker awx-cbreceiver awx-celery-beat awx-channels-worker awx-daphne awx-web
 ```
 comment out these two lines in /etc/awx/settings.py: (will be fixed from version 1.0.6.9)
