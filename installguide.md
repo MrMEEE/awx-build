@@ -180,6 +180,7 @@ Confirmed working upgrade paths:
 * 1.0.6.14 -> 1.0.6.16
 * 1.0.6.16 -> 1.0.6.23
 * 1.0.6.23 -> 1.0.6.28
+* 1.0.6.28 -> 1.0.6.47
 
 Upgrading to newest version (not guaranteed to work)
 ```bash
