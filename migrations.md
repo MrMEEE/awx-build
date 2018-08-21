@@ -39,6 +39,18 @@ su - postgres
 ALTER TABLE main_organization ADD COLUMN job_template_admin_role_id integer;
 ALTER TABLE main_organization ADD FOREIGN KEY (job_template_admin_role_id) REFERENCES main_rbac_roles(id) DEFERRABLE INITIALLY DEFERRED;
 
+There is an issue with awx-celery-worker, which will be fixed with the next build, but for 1.0.7.3 change:
+
+ExecStart=/opt/awx/bin/celery worker -A awx -B -l info --autoscale=50,4 -Ofair -s /var/lib/awx/beat.db -n celery@%(ENV_HOSTNAME)s
+to
+ExecStart=/opt/awx/bin/celery worker -A awx -B -l info --autoscale=50,4 -Ofair -s /var/lib/awx/beat.db -n celery@%H
+
+in:
+
+/usr/lib/systemd/system/awx-celery-worker.service
+
+systemctl daemon-reload
+
 systemctl restart awx-celery-worker awx-cbreceiver awx-celery-beat awx-channels-worker awx-daphne awx-web
 
 REF: https://github.com/ansible/awx/issues/2173
