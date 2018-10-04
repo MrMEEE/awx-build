@@ -185,6 +185,7 @@ Confirmed working upgrade paths:
 * 1.0.7.3 -> 1.0.7.4
 * 1.0.7.4 -> 1.0.7.9 --merge needed on makemigrations
 * 1.0.7.9 -> 1.0.8.14
+* 1.0.8.14 -> 2.0.0
 
 Upgrading to newest version (not guaranteed to work)
 ```bash
