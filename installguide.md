@@ -172,18 +172,22 @@ Confirmed working upgrade paths:
 * 1.0.6.0 -> 1.0.6.1
 * 1.0.6.1 -> 1.0.6.3
 * 1.0.6.3 -> 1.0.6.7
-* 1.0.6.7 -> 1.0.6.8 [Small workarounds needed](migrations.md)
+* 1.0.6.7 -> 1.0.6.8 <sup>[1](#workaround)</sup>
 * 1.0.6.8 -> 1.0.6.11
 * 1.0.6.11 -> 1.0.6.14
 * 1.0.6.14 -> 1.0.6.16
 * 1.0.6.16 -> 1.0.6.23
 * 1.0.6.23 -> 1.0.6.28
 * 1.0.6.28 -> 1.0.6.47
-* 1.0.6.47 -> 1.0.7.3 [Small workarounds needed](migrations.md)
+* 1.0.6.47 -> 1.0.7.3 <sup>[1](#workaround)</sup>
 * 1.0.7.3 -> 1.0.7.4
-* 1.0.7.4 -> 1.0.7.9 --merge needed on makemigrations
+* 1.0.7.4 -> 1.0.7.9 <sup>[2](#merge)</sup>
 * 1.0.7.9 -> 1.0.8.14
 * 1.0.8.14 -> 2.0.0
+* 2.0.0 -> 2.1.0.74 <sup>[1](#workaround)</sup><sup>[2](#merge)</sup>
+
+<a name="workaround">1</a>: [Small workarounds needed](migrations.md)
+<a name="merge">2</a>: "awx-manage makemigrations" needs to be run with "--merge"
 
 Upgrading to newest version (not guaranteed to work)
 ```bash
