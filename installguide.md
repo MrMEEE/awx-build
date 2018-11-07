@@ -187,6 +187,7 @@ Confirmed working upgrade paths:
 * 2.0.0 -> 2.1.0.74 <sup>[1](#workaround)</sup><sup>[2](#merge)</sup>
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
+
 <a name="merge">2</a>: "awx-manage makemigrations" needs to be run with "--merge"
 
 Upgrading to newest version (not guaranteed to work)
