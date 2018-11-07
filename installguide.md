@@ -145,8 +145,7 @@ systemctl start nginx
 * Start Services
 ```bash
 systemctl start awx-cbreceiver
-systemctl start awx-celery-beat
-systemctl start awx-celery-worker
+systemctl start awx-dispatcher
 systemctl start awx-channels-worker
 systemctl start awx-daphne
 systemctl start awx-web
@@ -155,8 +154,7 @@ systemctl start awx-web
 * Enable Services
 ```bash
 systemctl enable awx-cbreceiver
-systemctl enable awx-celery-beat
-systemctl enable awx-celery-worker
+systemctl enable awx-dispatcher
 systemctl enable awx-channels-worker
 systemctl enable awx-daphne
 systemctl enable awx-web
