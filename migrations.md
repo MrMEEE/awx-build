@@ -2,8 +2,10 @@
 
 * 2.0.0 -> 2.1.0.74
 
+```
 systemctl enable awx-dispatcher.service
 systemctl start awx-dispatcher.service
+```
 
 * 1.0.6.47 -> 1.0.7.3
 
