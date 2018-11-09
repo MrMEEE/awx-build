@@ -1,7 +1,6 @@
 # Install AWX Community Edition (RPM)
 
 **Caveats/TODO List**
-* SELinux policies has still not been created (comming soon), so you'll have to make your own or disable SELinux...
 * Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
 * Backup/Restore scripts
 * Fix Migrations/upgrades so that they will work everytime.. see bottom for more description..
@@ -9,6 +8,15 @@
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 
 ## Installation Steps
+
+### SELinux (Beta)
+
+These instructions have not been tested firmly yet, so if you have any issues, please report back
+
+```
+semanage port -a -t http_port_t -p tcp 8051
+setsebool -P httpd_can_network_connect 1
+```
 
 ### Repos
 
