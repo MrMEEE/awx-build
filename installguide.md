@@ -26,14 +26,16 @@ yum install -y epel-release
     * Activate Software Collections
 
 * AWX Repo
+For all builds (might be unstable, but I will probably test these better):
 ```bash
 yum install -y wget
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
 ```
-  * **NOTE:**
-  DON'T use the AWX Non-Dev repo, use the one above.
-  AWX upstream doesn't release stable releases, so the following repo is not updated.
-  For only releases (1.0.1, 1.0.2 ... ): https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
+For only "stable" builds (the base releases, 2.0.1, 2.1.0.. no minors):
+```bash
+yum install -y wget
+wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
+```
 
 ### Install Pre-Reqs for AWX
 
