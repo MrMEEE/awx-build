@@ -1,5 +1,17 @@
 # Migration issues:
 
+* 2.0.0 -> 2.1.192
+```
+Issue: 
+sudo -u awx /opt/awx/bin/awx-manage makemigrations
+CommandError: Conflicting migrations detected; multiple leaf nodes in the migration graph:
+(0052_v340_remove_project_scm_delete_on_next_update, 0050_merge_20180926_1745 in main).
+To fix them run 'python manage.p1. y makemigrations --merg2. e'
+
+Fix:
+ 1. /opt/awx/bin/awx-manage makemigrations --merge 
+ 2. /opt/awx/bin/awx-manage migrate
+```
 * 2.0.0 -> 2.1.0.74
 
 ```
