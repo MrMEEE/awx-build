@@ -28,7 +28,7 @@ yum install -y epel-release
 * Activate PostgreSQL 9.6
   * CentOS
   ```bash
-  yum install -y https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm
+  yum install centos-release-scl # Software Collections
   ```
   * RHEL
     * Activate Software Collections
@@ -62,12 +62,6 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
   ```
 
 * Install PostgreSQL and memcached
-  * CentOS
-  ```bash
-  yum install -y postgresql96-server memcached
-  ```
-
-  * RHEL
   ```bash
   yum install -y rh-postgresql96 memcached
   ```
@@ -80,11 +74,6 @@ yum install -y awx
 ### Configure Pre-Req Applications
 
 * Initialize DB
-  * CentOS
-  ```bash
-  /usr/pgsql-9.6/bin/postgresql96-setup initdb
-  ```
-  * RHEL
   ```bash
   scl enable rh-postgresql96 "postgresql-setup initdb"
   ```
@@ -96,12 +85,6 @@ systemctl start rabbitmq-server
 ```
 
 * Start services: Postgresql Database
-  * CentOS
-  ```bash
-  systemctl enable postgresql-9.6
-  systemctl start postgresql-9.6
-  ```
-  * RHEL
   ```bash
   systemctl start rh-postgresql96-postgresql.service
   systemctl enable rh-postgresql96-postgresql.service
@@ -115,12 +98,6 @@ systemctl start memcached
 
 * Create Postgres user and DB:
   * CentOS
-  ```bash
-  sudo -u postgres createuser -S awx # (ignore "could not change directory to "/root"")
-  sudo -u postgres createdb -O awx awx # (ignore "could not change directory to "/root"")
-  ```
-
-  * RHEL
   ```bash
   scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
   scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
