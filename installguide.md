@@ -180,6 +180,7 @@ Confirmed working upgrade paths:
 * 2.1.0.194 -> 2.1.0.272 <sup>[2](#merge)</sup>
 * 2.1.0.272 -> 2.1.1.27-2 <sup>[2](#merge)</sup>
 * 2.1.1.27-2 -> 2.1.1.36
+* 2.1.1.36 -> 2.1.2.1
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
 
