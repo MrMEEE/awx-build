@@ -14,6 +14,7 @@ Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 These instructions have not been tested firmly yet, so if you have any issues, please report back
 
 ```
+yum -y install policycoreutils-python
 semanage port -a -t http_port_t -p tcp 8051
 semanage port -a -t http_port_t -p tcp 8052
 setsebool -P httpd_can_network_connect 1
