@@ -99,7 +99,6 @@ systemctl start memcached
 ```
 
 * Create Postgres user and DB:
-  * CentOS
   ```bash
   scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
   scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
