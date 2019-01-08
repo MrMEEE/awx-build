@@ -24,7 +24,7 @@ setsebool -P httpd_can_network_connect 1
 
 * Activate EPEL
 ```bash
-yum install -y epel-release
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 ```
 
 * Activate PostgreSQL 9.6
