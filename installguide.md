@@ -7,6 +7,15 @@
 
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 
+## PreReqs
+### Disk requirements
+
+AWX is primarily resident in /opt/awx, where it takes up around 500MB...
+
+It's works is done in tmp and /var/lib/awx.. but shouldn't take up much space...
+
+I would say that a server with 10GB of space should be more than enough to start with.. Of course this depends on your playbooks..
+
 ## Installation Steps
 
 ### SELinux (Beta)
