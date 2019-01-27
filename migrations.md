@@ -1,5 +1,51 @@
 # Migration issues:
 
+* 2.1.2.44 -> 3.0.0.0
+
+```bash
+yum install -y rh-postgresql10 rh-postgresql10-postgresql-devel
+
+scl enable rh-postgresql10 "postgresql-setup initdb"
+
+wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/coprs/mrmeee/ansible-awx/repo/epel-7/mrmeee-ansible-awx-epel-7.repo
+
+rm -f /etc/yum.repos.d/awx-rpm.repo
+
+yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x rh-python36-azure* rh-python36*
+
+systemctl stop awx-cbreceiver awx-channels-worker awx-daphne awx-dispatcher awx-web
+```
+If postgresql-9.6 is installed WITH software collections:
+```bash
+systemctl stop rh-postgresql96-postgresql
+scl enable rh-postgresql10 "pg_upgrade -b /opt/rh/rh-postgresql96/root/usr/bin/ -B /opt/rh/rh-postgresql10/root/usr/bin/ -d /var/opt/rh/rh-postgresql96/lib/pgsql/data -D /var/opt/rh/rh-postgresql10/lib/pgsql/data"
+
+```
+If postgresql-9.6 is installed WITHOUT software collections:
+```bash
+systemctl stop postgresql-9.6 
+scl enable rh-postgresql10 "pg_upgrade -b /usr/pgsql-9.6/bin/ -B /opt/rh/rh-postgresql10/root/usr/bin/ -d /var/lib/pgsql/9.6/data/ -D /var/opt/rh/rh-postgresql10/lib/pgsql/data"
+
+```
+Upgrade to the new AWX-RPM:
+```bash
+yum -y install ansible-awx
+```
+Cleanup:
+```bash
+yum -y remove rh-postgresql96* postgresql96* awx
+```
+Start Services and upgrade db:
+```bash
+systemctl start rh-postgresql10-postgresql.service
+systemctl enable rh-postgresql10-postgresql.service
+
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
+
+systemctl start awx-cbreceiver awx-channels-worker awx-daphne awx-dispatcher awx-web
+```
+
 * 2.0.0 -> 2.1.0.74
 
 ```
