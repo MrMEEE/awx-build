@@ -20,9 +20,7 @@ I would say that a server with 10GB of space should be more than enough to start
 
 ## Installation Steps
 
-### SELinux (Beta)
-
-These instructions have not been tested firmly yet, so if you have any issues, please report back
+### SELinux 
 
 ```
 yum -y install policycoreutils-python
