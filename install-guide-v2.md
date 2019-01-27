@@ -1,6 +1,6 @@
 # Install AWX Community Edition (RPM)
 
-*** These instruction are for AWX-RPM v.2... for v.3 go to: [https://github.com/MrMEEE/awx-build/blob/master/installguide.md]***
+** These instruction are for AWX-RPM v.2 and kept for history/fallback... for v.3 go to: [https://github.com/MrMEEE/awx-build/blob/master/installguide.md]**
 
 **Caveats/TODO List**
 * Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
