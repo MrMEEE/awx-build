@@ -86,7 +86,7 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
   
 * Install Python dependecies (needs cleaning, probably to much and the azure stuff doesn't work right now)
 ```bash
-yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x rh-python36-azure* rh-python36*
+yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x rh-python36-azure*,*-debuginfo rh-python36*
 ```
 
 * Install AWX:
