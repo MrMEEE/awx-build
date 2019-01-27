@@ -1,5 +1,7 @@
 # Install AWX Community Edition (RPM)
 
+**Now updated to the newest release of AWX (python3 and PostgreSQL 10), please be adviced that this has not been firmly tested, yet..**  
+
 **Caveats/TODO List**
 * Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
 * Backup/Restore scripts
@@ -10,7 +12,7 @@ Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 ## PreReqs
 ### Disk requirements
 
-AWX is primarily resident in /opt/awx, where it takes up around 500MB...
+AWX is primarily resident in /opt/awx and /opt/rh/rh-python36, where it takes up around 500MB...
 
 It's works is done in tmp and /var/lib/awx.. but shouldn't take up much space...
 
@@ -32,11 +34,16 @@ setsebool -P httpd_can_network_connect 1
 ### Repos
 
 * Activate EPEL
-```bash
-yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-```
+  * CentOS
+  ```bash
+  yum -y install epel-release
+  ```
+  * RHEL
+  ```bash
+  yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  ```
 
-* Activate PostgreSQL 9.6
+* Activate PostgreSQL 10
   * CentOS
   ```bash
   yum install centos-release-scl # Software Collections
@@ -49,9 +56,9 @@ yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.r
 For all builds (might be unstable, but I will probably test these better):
 ```bash
 yum install -y wget
-wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx-dev/repo/epel-7/mrmeee-awx-dev-epel-7.repo
+wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/coprs/mrmeee/ansible-awx/repo/epel-7/mrmeee-ansible-awx-epel-7.repo
 ```
-For only "stable" builds (the base releases, 2.0.1, 2.1.0.. no minors):
+For only "stable" builds (the base releases, 2.0.1, 2.1.0.. no minors) THIS IS NOT AVAILABLE FOR AWX-RPM 3.0+... yet...:
 ```bash
 yum install -y wget
 wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
@@ -74,19 +81,19 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
 
 * Install PostgreSQL and memcached
   ```bash
-  yum install -y rh-postgresql96 memcached
+  yum install -y rh-postgresql10 memcached
   ```
 
 * Install AWX:
 ```bash
-yum install -y awx
+yum install -y ansible-awx
 ```
 
 ### Configure Pre-Req Applications
 
 * Initialize DB
   ```bash
-  scl enable rh-postgresql96 "postgresql-setup initdb"
+  scl enable rh-postgresql10 "postgresql-setup initdb"
   ```
 
 * Start services: RabbitMQ
@@ -109,23 +116,24 @@ systemctl start memcached
 
 * Create Postgres user and DB:
   ```bash
-  scl enable rh-postgresql96 "su postgres -c \"createuser -S awx\""
-  scl enable rh-postgresql96 "su postgres -c \"createdb -O awx awx\""
+  scl enable rh-postgresql10 "su postgres -c \"createuser -S awx\""
+  scl enable rh-postgresql10 "su postgres -c \"createdb -O awx awx\""
   ```
 
 ### Configure AWX
 
 * Import Database data:
 ```bash
-sudo -u awx /opt/awx/bin/awx-manage migrate
+sudo -u awx scl enable rh-python36 rh-postgresql10 "awx-manage migrate"
 ```
 
 * Initial configuration of AWX
 ```bash
-echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | sudo -u awx /opt/awx/bin/awx-manage shell
-sudo -u awx /opt/awx/bin/awx-manage create_preload_data
-sudo -u awx /opt/awx/bin/awx-manage provision_instance --hostname=$(hostname)
-sudo -u awx /opt/awx/bin/awx-manage register_queue --queuename=tower --hostnames=$(hostname)
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | sudo -u awx scl enable rh-python36 rh-postgresql10 "awx-manage shell"
+
+sudo -u awx scl enable rh-python36 rh-postgresql10 "awx-manage create_preload_data"
+sudo -u awx scl enable rh-python36 rh-postgresql10 "awx-manage provision_instance --hostname=$(hostname)"
+sudo -u awx scl enable rh-python36 rh-postgresql10 "awx-manage register_queue --queuename=tower --hostnames=$(hostname)"
 ```
 
 ### Install and Configure Web Server Proxy
