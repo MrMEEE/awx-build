@@ -206,6 +206,7 @@ Confirmed working upgrade paths:
 * 2.1.2.1 -> 2.1.2.32-3
 * 2.1.2.32 -> 2.1.2.36
 * 2.1.2.36 -> 2.1.2.44
+* 2.1.2.44 -> 3.0.0.0 <sup>[2](#merge)</sup>
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
 
@@ -214,8 +215,8 @@ Confirmed working upgrade paths:
 Upgrading to newest version (not guaranteed to work)
 ```bash
 yum update
-sudo -u awx /opt/awx/bin/awx-manage makemigrations
-sudo -u awx /opt/awx/bin/awx-manage migrate
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
 ```
 
 ## Broken Upgrade Paths
