@@ -207,6 +207,7 @@ Confirmed working upgrade paths:
 * 2.1.2.32 -> 2.1.2.36
 * 2.1.2.36 -> 2.1.2.44
 * 2.1.2.44 -> 3.0.0.0 <sup>[1](#workaround)</sup>
+* 3.0.0.0 -> 3.0.0.59
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
 
