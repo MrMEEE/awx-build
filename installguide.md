@@ -2,6 +2,8 @@
 
 **Now updated to the newest release of AWX (python3 and PostgreSQL 10), please be adviced that this has not been firmly tested, yet..**  
 
+**Follow updates and other info at: https://twitter.com/martinjuhl and https://www.linkedin.com/in/martin-juhl-9b71b25/
+
 **Caveats/TODO List**
 * Firewall rules has still not been created, so you'll have to make your own or disable the firewall...
 * Backup/Restore scripts
