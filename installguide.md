@@ -109,8 +109,8 @@ systemctl start rabbitmq-server
 
 * Start services: Postgresql Database
   ```bash
-  systemctl start rh-postgresql96-postgresql.service
-  systemctl enable rh-postgresql96-postgresql.service
+  systemctl start rh-postgresql10-postgresql.service
+  systemctl enable rh-postgresql10-postgresql.service
   ```
 
 * Start services: Memcached
