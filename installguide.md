@@ -43,14 +43,16 @@ setsebool -P httpd_can_network_connect 1
   yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   ```
 
-* Activate PostgreSQL 10
+* Activate PostgreSQL 10 and Python 3.6
   * CentOS
   ```bash
-  yum install centos-release-scl # Software Collections
+    yum -y install centos-release-scl centos-release-scl-rh # Software Collections
   ```
   * RHEL
-    * Activate Software Collections
-
+  ```
+    http://mirror.centos.org/centos/7/extras/x86_64/Packages/centos-release-scl-rh-2-2.el7.centos.noarch.rpm
+    subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+  ```
 * AWX Repo
 
 For all builds (might be unstable, but I will probably test these better):
