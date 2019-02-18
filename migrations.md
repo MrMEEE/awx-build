@@ -11,6 +11,12 @@ wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/copr
 
 rm -f /etc/yum.repos.d/awx-rpm.repo
 
+CentOS:
+yum -y install centos-release-scl-rh
+
+RHEL:
+http://mirror.centos.org/centos/7/extras/x86_64/Packages/centos-release-scl-rh-2-2.el7.centos.noarch.rpm
+
 yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x rh-python36-azure* rh-python36*
 
 systemctl stop awx-cbreceiver awx-channels-worker awx-daphne awx-dispatcher awx-web
