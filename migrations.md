@@ -35,7 +35,7 @@ scl enable rh-postgresql10 "pg_upgrade -b /opt/rh/rh-postgresql96/root/usr/bin/ 
 If postgresql-9.6 is installed WITHOUT software collections:
 ```bash
 systemctl stop postgresql-9.6 
-scl enable rh-postgresql10 "pg_upgrade -b /usr/pgsql-9.6/bin/ -B /opt/rh/rh-postgresql10/root/usr/bin/ -d /var/lib/pgsql/9.6/data/ -D /var/opt/rh/rh-postgresql10/lib/pgsql/data"
+sudo -u postgres scl enable rh-postgresql10 "pg_upgrade -b /usr/pgsql-9.6/bin/ -B /opt/rh/rh-postgresql10/root/usr/bin/ -d /var/lib/pgsql/9.6/data/ -D /var/opt/rh/rh-postgresql10/lib/pgsql/data"
 
 ```
 Upgrade to the new AWX-RPM:
