@@ -175,6 +175,18 @@ systemctl enable awx-web
 
 ---
 
+# Create Virtualenv for Ansible
+AWX runs Ansible inside Virtualenvs, to be able to utilize several version simultanious. You should create one now, with your preferred Ansible version (change 2.7.7 into that version):
+
+```
+scl enable rh-python36 "virtualenv /var/lib/awx/venv/ansible2.7.7"
+scl enable rh-python36 "/var/lib/awx/venv/ansible2.7.7/bin/pip3 install python-memcached psutil"
+scl enable rh-python36 "/var/lib/awx/venv/ansible2.7.7/bin/pip3 install -U \"ansible == 2.7.7\""
+```
+
+Now this version can be selected for each play or organization default. (if you can't see it there, try to create another, there is a bug upstream, that means that the dropdown will first appear, when there are 3 or more venvs)
+
+
 # Upgrade AWX Community Edition (RPM)
 
 ## Working Upgrade Paths
