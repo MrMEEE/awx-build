@@ -226,6 +226,7 @@ Confirmed working upgrade paths:
 * 3.0.0.124 -> 3.0.1.12
 * 3.0.1.12 -> 3.0.1.35
 * 3.0.1.35 -> 3.0.1.219
+* 3.0.1.219 -> 3.0.1.223
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
 
