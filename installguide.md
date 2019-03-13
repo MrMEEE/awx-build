@@ -88,6 +88,7 @@ wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mr
   
 * Install Python dependecies (needs cleaning, probably too much)
 ```bash
+yum -y install rh-python36
 yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debuginfo rh-python36*
 ```
 
