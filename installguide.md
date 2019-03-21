@@ -26,6 +26,7 @@ I would say that a server with 10GB of space should be more than enough to start
 
 ```
 yum -y install policycoreutils-python
+semanage port -a -t http_port_t -p tcp 8050
 semanage port -a -t http_port_t -p tcp 8051
 semanage port -a -t http_port_t -p tcp 8052
 setsebool -P httpd_can_network_connect 1
@@ -187,6 +188,7 @@ systemctl enable awx-web
 AWX runs Ansible inside Virtualenvs, to be able to utilize several version simultanious. You should create one now, with your preferred Ansible version (change 2.7.7 into that version):
 
 ```
+yum -y install gcc
 scl enable rh-python36 "virtualenv /var/lib/awx/venv/ansible2.7.7"
 scl enable rh-python36 "/var/lib/awx/venv/ansible2.7.7/bin/pip3 install python-memcached psutil"
 scl enable rh-python36 "/var/lib/awx/venv/ansible2.7.7/bin/pip3 install -U \"ansible == 2.7.7\""
