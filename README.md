@@ -7,3 +7,5 @@
 **Follow updates and other info at: https://twitter.com/martinjuhl and https://www.linkedin.com/in/martin-juhl-9b71b25/**
 
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
+
+See the [Install Guide](installguide.md) for installation and upgrade details and much more..
