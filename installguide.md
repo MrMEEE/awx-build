@@ -1,6 +1,8 @@
 # Install AWX Community Edition (RPM)
 
-**Now updated to the newest release of AWX (python3 and PostgreSQL 10), please be adviced that this has not been firmly tested, yet..**  
+**Now updated to the newest release of AWX (python3 and PostgreSQL 10), please be adviced that this has not been firmly tested, yet..** 
+
+**LinkedIn group for Questions, support, talk and more: https://www.linkedin.com/groups/13694893/
 
 **Follow updates and other info at: https://twitter.com/martinjuhl and https://www.linkedin.com/in/martin-juhl-9b71b25/**
 
