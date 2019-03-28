@@ -180,13 +180,23 @@ systemctl enable awx-web
 ---
 
 # Create Virtualenv for Ansible
-AWX runs Ansible inside Virtualenvs, to be able to utilize several version simultanious. You should create one now, with your preferred Ansible version (change 2.7.7 into that version):
+AWX runs Ansible inside Virtualenvs, to be able to utilize several version simultanious. You should create one now, with your preferred Ansible version:
 
 ```
 yum -y install gcc
-scl enable rh-python36 "virtualenv /var/lib/awx/venv/ansible2.7.7"
-scl enable rh-python36 "/var/lib/awx/venv/ansible2.7.7/bin/pip3 install python-memcached psutil"
-scl enable rh-python36 "/var/lib/awx/venv/ansible2.7.7/bin/pip3 install -U \"ansible == 2.7.7\""
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-create-venv"
+
+awx-create-venv [-options] venvname
+
+Create a Virtual Enviroment for use with AWX-RPM, containing Ansible
+
+Note: GCC is needed to setup the Virtual Environments, install gcc with "yum -y install gcc", if it's not installed..
+
+ options:
+  -p, --pythonversion        pythonversion to use (2 or 3), defaults to 3
+  -a, --ansibleversion       ansible version to install in venv, defaults to latest
+  -n, --venvname             name of venv, defaults to "{pythonversion}-{ansibleversion}-{date}"
+  -e, --venvpath             path where the venv will be created, defaults to /var/lib/awx/venv/
 ```
 
 Now this version can be selected for each play or organization default. (if you can't see it there, try to create another, there is a bug upstream, that means that the dropdown will first appear, when there are 3 or more venvs)
