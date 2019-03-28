@@ -56,15 +56,10 @@ setsebool -P httpd_can_network_connect 1
   ```
 * AWX Repo
 
-For all builds (might be unstable, but I will probably test these better):
+For all builds:
 ```bash
 yum install -y wget
 wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/coprs/mrmeee/ansible-awx/repo/epel-7/mrmeee-ansible-awx-epel-7.repo
-```
-For only "stable" builds (the base releases, 2.0.1, 2.1.0.. no minors) THIS IS NOT AVAILABLE FOR AWX-RPM 3.0+... yet...:
-```bash
-yum install -y wget
-wget -O /etc/yum.repos.d/awx-rpm.repo https://copr.fedorainfracloud.org/coprs/mrmeee/awx/repo/epel-7/mrmeee-awx-epel-7.repo
 ```
 
 ### Install Pre-Reqs for AWX
