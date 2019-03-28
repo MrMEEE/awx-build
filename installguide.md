@@ -186,7 +186,6 @@ AWX runs Ansible inside Virtualenvs, to be able to utilize several version simul
 
 ```
 yum -y install gcc
-sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-create-venv"
 
 awx-create-venv [-options] venvname
 
