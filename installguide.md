@@ -249,6 +249,7 @@ Confirmed working upgrade paths:
 * 4.0.0.4 -> 4.0.0.6
 * 4.0.0.6 -> 4.0.0.15
 * 4.0.0.15 -> 4.0.0.43
+* 4.0.0.43 -> 4.0.0.144
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
 
