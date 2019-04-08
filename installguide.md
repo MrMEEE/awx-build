@@ -250,6 +250,7 @@ Confirmed working upgrade paths:
 * 4.0.0.6 -> 4.0.0.15
 * 4.0.0.15 -> 4.0.0.43
 * 4.0.0.43 -> 4.0.0.144
+* 4.0.0.144 -> 4.0.0.227 <sup>[1](#workaround)</sup>
 
 <a name="workaround">1</a>: [Small workarounds needed](migrations.md)
 
@@ -258,6 +259,7 @@ Confirmed working upgrade paths:
 Upgrading to newest version (not guaranteed to work)
 ```bash
 yum update
+yum install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debuginfo rh-python36*
 sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
 sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
 ```
