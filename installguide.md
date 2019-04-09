@@ -56,9 +56,14 @@ setsebool -P httpd_can_network_connect 1
     yum -y install centos-release-scl centos-release-scl-rh # Software Collections
     wget -O /etc/yum.repos.d/mrmeee-rh-postgresql10-epel-7.repo https://copr.fedorainfracloud.org/coprs/mrmeee/rh-postgresql10/repo/epel-7/mrmeee-rh-postgresql10-epel-7.repo
   ```
-  * RHEL
+  * RHEL x86_64
   ```
     rpm -ivh http://mirror.centos.org/centos/7/extras/x86_64/Packages/centos-release-scl-rh-2-2.el7.centos.noarch.rpm
+    subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+  ```
+  * RHEL ppc64le
+  ```
+    rpm -ivh http://mirrors.dotsrc.org/centos-altarch/7/extras/ppc64le/Packages/centos-release-scl-rh-2-3.el7.centos.noarch.rpm
     subscription-manager repos --enable=rhel-server-rhscl-7-rpms
   ```
 * AWX Repo
