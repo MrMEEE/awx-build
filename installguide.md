@@ -47,9 +47,14 @@ setsebool -P httpd_can_network_connect 1
   ```
 
 * Activate PostgreSQL 10 and Python 3.6
-  * CentOS
+  * CentOS x86_64
   ```bash
     yum -y install centos-release-scl centos-release-scl-rh # Software Collections
+  ```
+  * CentOS ppc64le
+  ```bash
+    yum -y install centos-release-scl centos-release-scl-rh # Software Collections
+    wget -O /etc/yum.repos.d/mrmeee-rh-postgresql10-epel-7.repo https://copr.fedorainfracloud.org/coprs/mrmeee/rh-postgresql10/repo/epel-7/mrmeee-rh-postgresql10-epel-7.repo
   ```
   * RHEL
   ```
