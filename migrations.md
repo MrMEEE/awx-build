@@ -1,7 +1,5 @@
 # Migration issues:
-
-
-* 4.0.0.299 -> 4.0.0.347 NOT COMPLETE YET
+* 4.0.0.299 -> 4.0.0.347
 ```
 yum -y install ansible-awx
 yum -y install ansible-tower-cli
@@ -9,9 +7,23 @@ yum install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debug
 sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
 sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
 ```
+If you have made custom settings to /etc/tower/settings.py, set:
+```
+AWX_PROOT_ENABLED = True
+```
 Setup Tower CLI:
 ```
-
+tower-cli config host http://<awxhost>:8052
+tower-cli config username <adminuser>
+tower-cli config username <adminpassword>
+```
+Change Tower server to Isolated mode:
+```
+tower-cli setting modify AWX_PROOT_ENABLED true
+```
+Restart services
+```
+systemctl restart awx-cbreceiver.service awx-channels-worker.service awx-daphne.service awx-dispatcher.service awx-web.service
 ```
 
 * 4.0.0.144 -> 4.0.0.227
