@@ -1,4 +1,19 @@
 # Migration issues:
+
+
+* 4.0.0.299 -> 4.0.0.347 NOT COMPLETE YET
+```
+yum -y install ansible-awx
+yum -y install ansible-tower-cli
+yum install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debuginfo rh-python36*
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
+sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
+```
+Setup Tower CLI:
+```
+
+```
+
 * 4.0.0.144 -> 4.0.0.227
 ```
 yum -y remove rh-python36-python-wheel
