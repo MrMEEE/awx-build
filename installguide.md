@@ -337,7 +337,7 @@ Restore AWX data from the file (alldata)
 awx-cli send alldata
 ```
 
-** High availability setup
+** High availability setup **
 Has been reported to work [here](https://github.com/MrMEEE/awx-build/issues/26)
 
 Steps:
@@ -347,5 +347,5 @@ modify the celery-worker execstart command
 
 
 ** Interesting Links
-[https://github.com/sujiar37/AWX-HA-InstanceGroup] Ansible playbook Repository for HA for the Docker version
+[https://github.com/sujiar37/AWX-HA-InstanceGroup] Ansible playbook Repository for HA for the Docker version **
 
