@@ -347,5 +347,5 @@ modify the celery-worker execstart command
 
 
 ### Interesting Links
-[https://github.com/sujiar37/AWX-HA-InstanceGroup] Ansible playbook Repository for HA for the Docker version **
+[https://github.com/sujiar37/AWX-HA-InstanceGroup] Ansible playbook Repository for HA for the Docker version
 
