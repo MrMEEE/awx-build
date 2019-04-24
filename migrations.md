@@ -56,7 +56,7 @@ yum -y install centos-release-scl-rh
 ```
 RHEL:
 ```
-http://mirror.centos.org/centos/7/extras/x86_64/Packages/centos-release-scl-rh-2-2.el7.centos.noarch.rpm
+rpm -ivh http://mirror.centos.org/centos/7/extras/x86_64/Packages/centos-release-scl-rh-2-2.el7.centos.noarch.rpm
 ```
 
 Install Dependencies and stop services:
