@@ -13,13 +13,13 @@ AWX_PROOT_ENABLED = True
 ```
 Setup Tower CLI:
 ```
-tower-cli config host http://<awxhost>:8052
-tower-cli config username <adminuser>
-tower-cli config password <adminpassword>
+scl enable rh-python36 "tower-cli config host http://<awxhost>:8052"
+scl enable rh-python36 "tower-cli config username <adminuser>"
+scl enable rh-python36 "tower-cli config password <adminpassword>"
 ```
 Change Tower server to Isolated mode:
 ```
-tower-cli setting modify AWX_PROOT_ENABLED true
+scl enable rh-python36 "tower-cli setting modify AWX_PROOT_ENABLED true"
 ```
 Restart services
 ```
