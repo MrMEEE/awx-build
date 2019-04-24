@@ -2,7 +2,7 @@
 * 4.0.0.299 -> 4.0.0.347
 ```
 yum -y install ansible-awx
-yum -y install ansible-tower-cli
+yum -y install rh-python36-ansible-tower-cli
 yum install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debuginfo rh-python36*
 sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
 sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
