@@ -15,7 +15,7 @@ Setup Tower CLI:
 ```
 tower-cli config host http://<awxhost>:8052
 tower-cli config username <adminuser>
-tower-cli config username <adminpassword>
+tower-cli config password <adminpassword>
 ```
 Change Tower server to Isolated mode:
 ```
