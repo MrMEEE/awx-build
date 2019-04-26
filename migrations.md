@@ -1,13 +1,4 @@
 # Migration issues:
-* 4.0.0.347 -> 4.0.0.376
-```
-yum -y update
-yum -y remove rh-python36-msgpack-python
-yum install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debuginfo rh-python36*
-sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage makemigrations"
-sudo -u awx scl enable rh-postgresql10 rh-python36 "awx-manage migrate"
-```
-
 * 4.0.0.299 -> 4.0.0.347
 ```
 yum -y install ansible-awx
