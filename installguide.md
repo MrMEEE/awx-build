@@ -84,9 +84,17 @@ wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/copr
   gpgcheck=1
   gpgkey=https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
   repo_gpgcheck=0
+  enabled=1
+  
+  [rabbitmq-3.7]
+  name=rabbitmq-3.7
+  baseurl=https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/
+  gpgcheck=1
+  gpgkey=https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
+  repo_gpgcheck=0
   enabled=1" > /etc/yum.repos.d/rabbitmq-erlang.repo
   
-  yum -y install https://dl.bintray.com/rabbitmq/all/rabbitmq-server/3.7.5/rabbitmq-server-3.7.5-1.el7.noarch.rpm
+  yum -y install rabbitmq-server
   ```
 
 * Install PostgreSQL and memcached
