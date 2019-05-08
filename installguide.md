@@ -64,7 +64,7 @@ setsebool -P httpd_can_network_connect 1
   * RHEL ppc64le
   ```
     rpm -ivh http://mirrors.dotsrc.org/centos-altarch/7/extras/ppc64le/Packages/centos-release-scl-rh-2-3.el7.centos.noarch.rpm
-    subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+    subscription-manager repos --enable rhel-7-server-for-power-le-rhscl-rpms
   ```
 * AWX Repo
 
