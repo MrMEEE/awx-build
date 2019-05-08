@@ -117,13 +117,16 @@ wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/copr
   yum -y install rh-python36
   yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, base' -x *-debuginfo rh-python36*
   ```
-* RHEL
+  * RHEL x86_64
   ```bash
   yum -y install rh-python36
   yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, rhel-7-server-rpms' -x *-debuginfo rh-python36*
   ```
-
-
+  * RHEL ppc64le
+  ```
+  yum -y install httpd24-httpd rh-python36
+  yum -y install --disablerepo='*' --enablerepo='mrmeee-ansible-awx, rhel-7-for-power-le-rpms' -x *-debuginfo,*-sphinx-* rh-python36*
+  ```
 * Install AWX:
 ```bash
 yum install -y ansible-awx
