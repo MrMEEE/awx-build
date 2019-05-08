@@ -78,21 +78,27 @@ wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/copr
 
 * Install RabbitMQ
   ```
-  echo "[rabbitmq-erlang]
-  name=rabbitmq-erlang
-  baseurl=https://dl.bintray.com/rabbitmq/rpm/erlang/20/el/7
-  gpgcheck=1
-  gpgkey=https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
-  repo_gpgcheck=0
+  echo "[rabbitmq_erlang]
+  name=rabbitmq_erlang
+  baseurl=https://packagecloud.io/rabbitmq/erlang/el/7/$basearch
+  repo_gpgcheck=1
+  gpgcheck=0
   enabled=1
+  gpgkey=https://packagecloud.io/rabbitmq/erlang/gpgkey
+  sslverify=1
+  sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+  metadata_expire=300
   
-  [rabbitmq-3.7]
-  name=rabbitmq-3.7
-  baseurl=https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/
-  gpgcheck=1
-  gpgkey=https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc
-  repo_gpgcheck=0
-  enabled=1" > /etc/yum.repos.d/rabbitmq-erlang.repo
+  [rabbitmq_rabbitmq-server]
+  name=rabbitmq_rabbitmq-server
+  baseurl=https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch
+  repo_gpgcheck=1
+  gpgcheck=0
+  enabled=1
+  gpgkey=https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
+  sslverify=1
+  sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+  metadata_expire=300" > /etc/yum.repos.d/rabbitmq-erlang.repo
   
   yum -y install rabbitmq-server
   ```
