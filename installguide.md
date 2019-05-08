@@ -77,32 +77,43 @@ wget -O /etc/yum.repos.d/ansible-awx.repo https://copr.fedorainfracloud.org/copr
 ### Install Pre-Reqs for AWX
 
 * Install RabbitMQ
-  ```
-  echo "[rabbitmq_erlang]
-  name=rabbitmq_erlang
-  baseurl=https://packagecloud.io/rabbitmq/erlang/el/7/$basearch
-  repo_gpgcheck=1
-  gpgcheck=0
-  enabled=1
-  gpgkey=https://packagecloud.io/rabbitmq/erlang/gpgkey
-  sslverify=1
-  sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-  metadata_expire=300
+  * x86_64
+    ```
+    echo "[rabbitmq_erlang]
+    name=rabbitmq_erlang
+    baseurl=https://packagecloud.io/rabbitmq/erlang/el/7/$basearch
+    repo_gpgcheck=1
+    gpgcheck=0
+    enabled=1
+    gpgkey=https://packagecloud.io/rabbitmq/erlang/gpgkey
+    sslverify=1
+    sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+    metadata_expire=300
   
-  [rabbitmq_rabbitmq-server]
-  name=rabbitmq_rabbitmq-server
-  baseurl=https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch
-  repo_gpgcheck=1
-  gpgcheck=0
-  enabled=1
-  gpgkey=https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
-  sslverify=1
-  sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-  metadata_expire=300" > /etc/yum.repos.d/rabbitmq-erlang.repo
+    [rabbitmq_rabbitmq-server]
+    name=rabbitmq_rabbitmq-server
+    baseurl=https://packagecloud.io/rabbitmq/rabbitmq-server/el/7/$basearch
+    repo_gpgcheck=1
+    gpgcheck=0
+    enabled=1
+    gpgkey=https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
+    sslverify=1
+    sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+    metadata_expire=300" > /etc/yum.repos.d/rabbitmq-erlang.repo
   
-  yum -y install rabbitmq-server
+    yum -y install rabbitmq-server
+    ```
+  * ppc64le
+    ```
+    [bintraybintray-rabbitmq-rpm] 
+    name=bintray-rabbitmq-rpm 
+    baseurl=https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.7.x/el/7/
+    gpgcheck=0 
+    repo_gpgcheck=0 
+    enabled=1" > /etc/yum.repos.d/rabbitmq-erlang.repo
+  
+    yum -y install rabbitmq-server
   ```
-
 * Install PostgreSQL and memcached
   ```bash
   yum install -y rh-postgresql10 memcached
