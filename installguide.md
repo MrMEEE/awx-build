@@ -212,7 +212,7 @@ systemctl enable awx-web
 ---
 
 # Create Virtualenv for Ansible
-AWX runs Ansible inside Virtualenvs, to be able to utilize several version simultanious. You should create one now, with your preferred Ansible version:
+AWX runs Ansible inside Virtualenvs, to be able to utilize several version simultaneously. You should create one now, with your preferred Ansible version:
 
 ```
 yum -y install gcc
