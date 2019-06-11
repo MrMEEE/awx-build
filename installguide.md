@@ -1,3 +1,11 @@
+### DEPRECATED ###
+
+All new information will be at: https://awx.wiki
+
+Issues will still be posted here...
+
+
+
 # Install AWX Community Edition (RPM)
 
 **Now updated to the newest release of AWX (python3 and PostgreSQL 10), please be adviced that this has not been firmly tested, yet..** 
