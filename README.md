@@ -1,5 +1,7 @@
 # AWX Community Edition (RPM)
 
+**Install guide, tools, utilities and more are now located at: https://awx.wiki
+
 **Now updated to the newest release of AWX (python3 and PostgreSQL 10)** 
 
 **LinkedIn group for Questions, support, talk and more: https://www.linkedin.com/groups/13694893/**
@@ -8,4 +10,4 @@
 
 Please submit issues here: https://github.com/MrMEEE/awx-build/issues
 
-See the [Install Guide](installguide.md) for installation and upgrade details and much more..
+
